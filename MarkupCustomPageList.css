@@ -1,0 +1,21 @@
+.label-main {
+    font-weight: bold;
+    font-size: 110%;
+}
+.label-name {
+    font-weight: normal;
+    color: #999;
+}
+.label-value {
+    font-weight: normal;
+    color: #999;
+}
+.label-image {
+	display: inline-block;
+	vertical-align: middle;
+	padding: 0;
+	margin: 0 0.5em 0 0;
+}
+.label-image img {
+	display: block;
+}
