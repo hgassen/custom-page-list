@@ -45,12 +45,12 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
 
 	public function init() {
         $this->config->styles->add($this->config->urls->MarkupCustomPageList . 'MarkupCustomPageList.css');
-        $this->addHookBefore('ProcessPageListRender::getPageLabel', $this, 'getPageLabel');
-        $this->addHookAfter('ProcessPageListRender::getPageActions', $this, 'addPageActions');
+        $this->addHookBefore('ProcessPageListRender::getPageLabel', $this, 'hookGetPageLabel');
+        $this->addHookAfter('ProcessPageListRender::getPageActions', $this, 'hookGetPageActions');
 	}
 	
 
-    public function getPageLabel($event) {
+    public function hookGetPageLabel($event) {
         
         $options = $this->getOptions();
 
@@ -252,7 +252,7 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
     }
     
 
-    public function addPageActions($event) {
+    public function hookGetPageActions($event) {
         
         if (!$this->user->hasPermission('template-admin')) {
             return;
