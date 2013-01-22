@@ -263,6 +263,7 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
     		return;
         }
         
+        $page = $event->arguments('page');        
         $actions = $event->return;
         $actions[] =  array(
 			'cn' => 'Edit-template', 
