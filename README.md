@@ -54,7 +54,7 @@ On the module's settings page, you can configure the following options:
 * Set separators
 * Set image options
 * Set datetime format for "created" and "modified" fields. (For all other datetime fields, the output format is taken from the field's definition.)
-* Show an additional link to edit the template associated with a page
+* Show an additional link to edit the template associated with a page (superuser only)
 * Set custom parameters (see next section)
 
 
@@ -70,10 +70,10 @@ Custom parameters for each field have the following format (everything must be o
 
 	fieldname=new fieldname|filtername1=filter value1|filtername2=filter value2 ...
 	
-Parameter name and values are separated by "=", segments are separated by "|".
+Parameter name and values are separated by "=", parameters are separated by "|".
 
 
-### First segment: fieldname=new fieldname
+### First parameter: fieldname=new fieldname
 
 Replace the default label (field name) by your own label:
     
@@ -84,7 +84,7 @@ Leave new fieldname empty to display no fieldname at all:
 	template.name=
 	
 
-### All other segments: filtername=filter value
+### All other parameters: filtername=filter value
 
 Right now, there are two output filters available:
 

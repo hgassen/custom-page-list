@@ -45,12 +45,12 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
 
 	public function init() {
         $this->config->styles->add($this->config->urls->MarkupCustomPageList . 'MarkupCustomPageList.css');
-        $this->addHookBefore('ProcessPageListRender::getPageLabel', $this, 'hookGetPageLabel');
-        $this->addHookAfter('ProcessPageListRender::getPageActions', $this, 'hookGetPageActions');
+        $this->addHookBefore('ProcessPageListRender::getPageLabel', $this, 'hookPageLabel');
+        $this->addHookAfter('ProcessPageListRender::getPageActions', $this, 'hookPageActions');
 	}
 	
 
-    public function hookGetPageLabel($event) {
+    public function hookPageLabel($event) {
         
         $options = $this->getOptions();
 
@@ -252,9 +252,9 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
     }
     
 
-    public function hookGetPageActions($event) {
+    public function hookPageActions($event) {
         
-        if (!$this->user->hasPermission('template-admin')) {
+        if (!$this->user->isSuperuser()) {
             return;
         }
         
@@ -263,15 +263,12 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
     		return;
         }
         
-        $page = $event->arguments('page');        
         $actions = $event->return;
-        if ($page->editable()) {
-            $actions[] =  array(
-    			'cn' => 'Edit-template', 
-    			'name' => $this->_('Edit template'), 
-    			'url' => $this->config->urls->admin . 'setup/template/edit?id=' . $page->template->id,
-    		);                        
-        }
+        $actions[] =  array(
+			'cn' => 'Edit-template', 
+			'name' => $this->_('Edit template'), 
+			'url' => $this->config->urls->admin . 'setup/template/edit?id=' . $page->template->id,
+		);                        
 		$event->return = $actions;
 	}
 	
