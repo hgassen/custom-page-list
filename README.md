@@ -115,6 +115,10 @@ CustomPageList is distributed under the GNU/GPL v2. See the included file `LICEN
 
 ## Version History
 
+Version 1.0.1 - Janaury 25, 2013
+
+* Change generated thumbnail names to comply with PW best practice.
+
 Version 1.0 - January 21, 2013
 
 * Initial release
