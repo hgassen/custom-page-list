@@ -276,17 +276,19 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
 
     private function resizeThumb($field, $thumbUrl, $size) {
         
-    	$thumb_path = $field->path() . basename($thumbUrl);
-        $filename = $size[0] . 'x' . $size[1] . '_' . basename($thumbUrl);
-        $thumb_path_new = $field->path() . $filename;
+        $basename = basename($thumbUrl);
+        list($img, $ext) = explode('.', $basename);
+    	$thumbPath = $field->path() . $basename;
+        $filename = $img . '.' . $size[0] . 'x' . $size[1] . '.' . $ext;
+        $thumbPathNew = $field->path() . $filename;
         
         // If the thumb already exists, no need to resize again
-    	if (file_exists($thumb_path_new)) {
+    	if (file_exists($thumbPathNew)) {
     	    return $filename;
     	}
     	
-        if (@copy($thumb_path, $thumb_path_new)) {
-            $sizer = new ImageSizer($thumb_path_new);
+        if (@copy($thumbPath, $thumbPathNew)) {
+            $sizer = new ImageSizer($thumbPathNew);
             $sizer->resize($size[0], $size[1]);
             return $filename;
         }
