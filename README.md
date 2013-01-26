@@ -115,9 +115,13 @@ CustomPageList is distributed under the GNU/GPL v2. See the included file `LICEN
 
 ## Version History
 
+Version 1.0.2 - January 26, 2013
+
+* Delete generated thumbs of type cropimage if parent image is deleted
+
 Version 1.0.1 - Janaury 25, 2013
 
-* Change generated thumbnail names to comply with PW best practice.
+* Change generated thumbnail names to comply with PW best practice
 
 Version 1.0 - January 21, 2013
 
