@@ -35,7 +35,7 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
             'summary' => 'Customize your page list display in the backend.',
             'author' => 'Heiner Gassen',
             'href' => 'https://github.com/hgassen/custom-page-list',
-            'version' => 101,
+            'version' => 102,
             'autoload' => true,
             'singular' => true,
             'requires' => array('ProcessPageList'),
