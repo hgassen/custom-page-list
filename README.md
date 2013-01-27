@@ -115,6 +115,10 @@ CustomPageList is distributed under the GNU/GPL v2. See the included file `LICEN
 
 ## Version History
 
+Version 1.0.3 - January 27, 2013
+
+* Fix for Fieldtype Page if specific field is requested
+
 Version 1.0.2 - January 26, 2013
 
 * Delete generated thumbs of type cropimage if parent image is deleted
