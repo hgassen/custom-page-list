@@ -131,9 +131,8 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
                 
                 $v = '';
             }
-            
-            
-            // Of several subfields, take the first one
+                        
+
 			if ($subfield && is_object($v)) {
 				if ($v instanceof WireArray && count($v)) {
 				    $v = $v->first();
@@ -141,15 +140,16 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
 				$v = $v->get($subfield);
 			} 
 
-            if (isset($page->fields->get($field)->type)) {
                 
-                // Created & modified fields
-    			if ($field == 'created' || $field == 'modified') {
-    			    $v = date($options['dateTimeFormat'], (int)$v);
-    			}
+            // Created & modified fields
+			if ($field == 'created' || $field == 'modified') {
+			    $v = date($options['dateTimeFormat'], (int)$v);
+			}
+
+            else if (isset($page->fields->get($field)->type)) {
 
     			// Datetime fields
-    			else if ($page->fields->get($field)->type instanceof FieldtypeDatetime) {
+    			if ($page->fields->get($field)->type instanceof FieldtypeDatetime) {
     			    if (!empty($page->fields->get($field)->dateOutputFormat)) {
         			    $v = date($page->fields->get($field)->dateOutputFormat, (int)$v);
         			} else {
@@ -157,35 +157,33 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
         			}
     			}		    
 
-                else if (isset($page->fields->{$field}->type)) {
+    			// Checkbox fields
+    			else if ($page->fields->get($field)->type instanceof FieldtypeCheckbox) {
+    			    $v = ($v == 1 ? $this->_('Yes') : $this->_('No'));
+    			}
 
-        			// Checkbox fields
-        			if ($page->fields->get($field)->type instanceof FieldtypeCheckbox) {
-        			    $v = ($v == 1 ? $this->_('Yes') : $this->_('No'));
-        			}
+    			// Page fields
+    			else if ($page->fields->get($field)->type instanceof FieldtypePage && !$subfield) {
+                    
+            	    if (strpos($v, '|') !== false) {
+            		    $pageIDs = explode('|', $v);
+            		} else {
+            		    $pageIDs = array($v);
+            		}
+    			    
+            		$pages = Wire::getFuel('pages');
+            		$titles = array();
+            		foreach($pageIDs as $id) {
+            		    $titles[] = $pages->get($id)->title;
+            		}
+            		$v = implode(', ', $titles);
+    			}
 
-        			// Page fields
-        			else if ($page->fields->get($field)->type instanceof FieldtypePage && !$subfield) {
-                	    if (strpos($v, '|') !== false) {
-                		    $pageIDs = explode('|', $v);
-                		} else {
-                		    $pageIDs = array($v);
-                		}
-                		$pages = Wire::getFuel('pages');
-                		$titles = array();
-                		foreach($pageIDs as $id) {
-                		    $titles[] = $pages->get($id)->title;
-                		}
-                		$v = implode(', ', $titles);
-        			}
-
-        			// File fields
-        			else if ($page->fields->get($field)->type instanceof FieldtypeFile) {
-        			    $v = str_replace('|', ', ', $v);
-        			}
-        		}
-            }
-			
+    			// File fields
+    			else if ($page->fields->get($field)->type instanceof FieldtypeFile) {
+    			    $v = str_replace('|', ', ', $v);
+    			}
+    		}
 			
 			if (!empty($v)) {
 		        $value[] = array($field . ($subfield ? '.' . $subfield : ''), $v);
