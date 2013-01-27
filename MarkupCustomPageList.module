@@ -165,7 +165,7 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
         			}
 
         			// Page fields
-        			else if ($page->fields->get($field)->type instanceof FieldtypePage) {
+        			else if ($page->fields->get($field)->type instanceof FieldtypePage && !$subfield) {
                 	    if (strpos($v, '|') !== false) {
                 		    $pageIDs = explode('|', $v);
                 		} else {
