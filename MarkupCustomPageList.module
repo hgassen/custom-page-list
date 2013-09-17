@@ -165,17 +165,15 @@ class MarkupCustomPageList extends WireData implements Module, ConfigurableModul
     			// Page fields
     			else if ($page->fields->get($field)->type instanceof FieldtypePage && !$subfield) {
                     
-            	    if (strpos($v, '|') !== false) {
-            		    $pageIDs = explode('|', $v);
-            		} else {
-            		    $pageIDs = array($v);
-            		}
-    			    
-            		$pages = Wire::getFuel('pages');
             		$titles = array();
-            		foreach($pageIDs as $id) {
-            		    $titles[] = $pages->get($id)->title;
-            		}
+                    if($v instanceof PageArray){
+                        foreach($v as $p) {
+                            $titles[] = $p->title;
+                        }
+                    } else {
+                        $titles[] = $v->title;
+                    }
+            		
             		$v = implode(', ', $titles);
     			}
 
